@@ -19,8 +19,6 @@ class UserController:
         return jsonify(
             UserService.get_all_users()
         )
-<<<<<<< HEAD
-=======
     
     def get_user_by_id(user_id):
         return jsonify(
@@ -31,37 +29,30 @@ class UserController:
         return jsonify(
             UserService.get_user_by_google_id(google_id=google_id)
         )
->>>>>>> bb8bfb8 (issue: checking bad request)
         
     def delete_user(user_id):
         return jsonify(
             UserService.delete_user(user_id=user_id)
-<<<<<<< HEAD
         )
-=======
-        )
-    
-    def checking(str):
-        # Get the string from the frontend
-        data = request.json
-        input_string = data.get('str')
+    def checking():
+            # Get the string from the frontend
+            data = request.get_json()
+            input_string = data.get('code')
 
-        # Create a session
-        session['input_string'] = input_string
-        print(session['input_string'])
+            # Create a session
+            session['input_string'] = input_string
+            print(session['input_string'])
 
-        # Create a special code (for example, a simple combination of string and some constant)
-        special_code = input_string + 'SECRET_CODE'
+            # Create a special code (for example, a simple combination of string and some constant)
+            special_code = input_string + 'SECRET_CODE'
 
-        # Hash the special code using SHA-256
-        hashed_code = hashlib.sha256(special_code.encode()).hexdigest()
+            # Hash the special code using SHA-256
+            hashed_code = hashlib.sha256(special_code.encode()).hexdigest()
 
-        # Send the hashed code back to the frontend
-        response = {
-            'hashed_code': hashed_code,
-            'checking': 'successfully done'
-        }
+            # Send the hashed code back to the frontend
+            response = {
+                'hashed_code': hashed_code,
+                'checking': 'successfully done'
+            }
 
-        return jsonify(response)
-
->>>>>>> bb8bfb8 (issue: checking bad request)
+            return jsonify(response)

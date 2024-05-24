@@ -7,11 +7,8 @@ from controllers.user_controller import UserController
 from flask import abort, session, request, redirect
 from configs import Config
 from services.user_service import UserService
-<<<<<<< HEAD
-=======
 from services.google_auth_service import Google_Auth_Service
 from services.apple_auth_service import Apple_Auth_Service
->>>>>>> bb8bfb8 (issue: checking bad request)
 # from flask_oauthlib.client import OAuth
 
 from google.oauth2 import id_token
@@ -24,12 +21,7 @@ from flask import request
 import httplib2
 from oauth2client import client
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bb8bfb8 (issue: checking bad request)
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
 
 google_client_id = Config.GOOGLE_CLIENT_ID
 client_secrets_file = os.path.join(
@@ -50,7 +42,7 @@ def login_window():
     return redirect(authorization_url)
 
 def callback():
-    flow.fetch_token(code=code)
+    flow.fetch_token(authorization_response=request.url)
 
     # if not session["state"] == request.args["state"]:
     #     abort(500)  # State does not match!
@@ -73,13 +65,10 @@ def callback():
 
 def personal_account():
     if "google_id" in session:       
-<<<<<<< HEAD
         UserService.create_user({"google_id":session["google_id"]})
-=======
         # existed_user = UserService.get_users_by("google_id", session["google_id"])
         # if not existed_user:
         #     UserService.create_user({"google_id":session["google_id"]})
->>>>>>> bb8bfb8 (issue: checking bad request)
         return "Logged_in via Google <a href='/log_out'><button>Log out</button></a>"
     else:
         return abort(401) 
