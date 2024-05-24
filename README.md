@@ -11,7 +11,7 @@ Example:
 - the response is going to be in a JSON fromat and contains two fields "checking_status" and "hashed_code":   
 Example:
   {
-    "checking_status": "successfully done",
+    "checking": "successfully done",
     "hashed_code": "0d3e41ad6dd57b3a239c7751240712752550b95a381b1a7a3f67a86f91b62959"
   }
   
