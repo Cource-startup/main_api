@@ -16,7 +16,7 @@
 "serverAuthCode": "13216596816513854168"
 }
 ```
-> rewquest's header:
+> request's header:
 'X-Requested-With': hashedPassword,
 
 ### sending response from back to front:
@@ -43,3 +43,29 @@ Response headers include:
  content-type: application/json,
  session_status: 1fecd8a930804ca98a819a824d59ecd3fed2a7801deac8fbc4d828de04deb0c6
 ```
+
+### Updating user's login:
+> request type - POST
+> url - http://10.0.2.2:8888/update_login
+> JSON:
+```
+{
+"login": "User's login",
+"google_id": "516815136846516384"
+}
+```
+Response object includes user's data:
+```
+{
+ "user": {
+  "avatar": null,
+  "created_at": "Thu, 27 Jun 2024 01:01:33 GMT",
+  "google_id": "516815136846516384",
+  "id": 7,
+  "login": User's login,
+  "middle_name": null,
+  "type": "users",
+  "updated_at": "Thu, 27 Jun 2024 01:01:33 GMT",
+  "user_name": "Anton Potapov"
+ }
+}
