@@ -62,9 +62,7 @@ class ValidationMiddleware:
                             return self._create_error_response(validator_name, field_name, field_rules)
                     except KeyError as e:
                         raise ValidationError(
-                            f"Validation rule '{validator_name}' for field '{field_name}' "
-                            f"requires missing key: '{e.args[0]}'."
-                        )
+                            f"Validation rule '{validator_name}' for field '{field_name}' requires missing key: '{e.args[0]}'.")
                     except ValidationError as ve:
                         return {"error": str(ve)}, 400
 
