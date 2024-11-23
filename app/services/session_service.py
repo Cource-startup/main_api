@@ -3,7 +3,7 @@ from config import Config
 from flask import session
 import datetime
 import hashlib
-from exceptions.auth_error import AuthenticationError
+from exceptions.authorization_error import AuthorizationError
 
 class SessionService():
     @staticmethod
@@ -26,7 +26,7 @@ class SessionService():
     def is_session_expired(user_id):
         try:
             if not session.get(user_id):
-                raise AuthenticationError("Session is expired")
+                raise AuthorizationError()
             return session.get('key')
         except KeyError as e:
             return str(e)

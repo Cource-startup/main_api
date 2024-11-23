@@ -1,5 +1,5 @@
 from config import Config
-from exceptions.auth_error import AuthenticationError
+from exceptions.authorization_error import AuthorizationError
 from exceptions.validation_error import ValidationError
 import hashlib
 
@@ -31,8 +31,8 @@ class CSRFMiddleware:
             )
 
         if token != secret_token:
-            raise AuthenticationError(
-                message="Invalid CSRF token. Authentication failed.",
+            raise AuthorizationError(
+                message="Invalid CSRF token.",
                 details={"method": request.method, "path": request.path}
             )
 

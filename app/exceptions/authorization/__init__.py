@@ -1,0 +1,1 @@
+from exceptions.authorization.user_not_registered import UserNotRegistered

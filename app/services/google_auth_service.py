@@ -2,7 +2,7 @@ import os
 import pathlib
 
 import requests
-from exceptions.fatal_error import FatalError
+from exceptions.system.fatal_error import FatalError
 import google.auth.transport.requests
 from config import Config, current_config
 from google.oauth2 import id_token

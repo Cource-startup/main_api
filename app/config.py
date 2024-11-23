@@ -1,6 +1,7 @@
 import os
 
 class Config:
+    FLASK_RUN_RELOAD=0
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     TRACK_STORAGE_FOLDER = "track_storage"
     MAX_CONTENT_LENGTH = 1024 * 1024 * 25 # 25 mb
@@ -12,7 +13,6 @@ class Config:
     GOOGLE_SIGN_IN_ACCOUNT = 'google_sign_in_account'
 
 class DevelopmentConfig(Config):
-    DEVELOPMENT = True
     DEBUG = True
     SQLALCHEMY_ECHO = True
     SQLALCHEMY_DATABASE_URI = os.getenv("DEVELOPMENT_DATABASE_URL")
@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
     OAUTHLIB_INSECURE_TRANSPORT = "1"
 
 class TestingConfig(Config):
-    TESTING = True
+    DEBUG=False
     SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL")
     OAUTHLIB_INSECURE_TRANSPORT = "1"
 

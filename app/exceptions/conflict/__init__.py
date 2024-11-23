@@ -1,0 +1,1 @@
+from exceptions.conflict.user_already_registered import UserNotRegistered

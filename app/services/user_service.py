@@ -1,4 +1,4 @@
-from exceptions.fatal_error import FatalError
+from exceptions.system.fatal_error import FatalError
 from models import User
 from sqlalchemy import select
 from db import db

@@ -1,5 +1,15 @@
-from exceptions.api_exception import APIException
+from exceptions.main_exception import MainException
 
-class ValidationError(APIException):
-    def __init__(self, message="Invalid input. Please check your data and try again.", http_code=422, details=None):
-        super().__init__(status="fail", http_code=http_code, message=message, details=details)
+class ValidationError(MainException):
+    def __init__(
+            self,
+            user_notification=None,
+            message="Unprocessable Data.", 
+            details=None,
+        ):
+        super().__init__(
+            user_notification=user_notification,
+            message=message,
+            http_code=422, 
+            details=details,
+        )

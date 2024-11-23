@@ -8,8 +8,8 @@ class ExceptionHandler:
     @staticmethod
     def handle_exception(e):
         """Main exception handling logic."""
-        from exceptions.api_exception import APIException
-        if isinstance(e, APIException):
+        from exceptions.main_exception import MainException
+        if isinstance(e, MainException):
             e.log()
             return jsonify(e.to_dict()), e.http_code
         return ExceptionHandler._handle_generic_exception(e)
