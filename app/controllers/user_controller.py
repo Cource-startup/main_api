@@ -12,5 +12,9 @@ class UserController:
     def register_user():
         data = request.get_json()
         return AuthService.register_user(**data)
+    
+    def update_user(id):
+        data = request.get_json()
+        return UserService.update_user_by_id(id, data)
 
     

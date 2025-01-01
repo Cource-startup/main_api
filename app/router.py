@@ -44,5 +44,20 @@ router_rules = [
     },
 
     # User API
+    {
+        "rule": "/update_user/<int:id>", "methods": ["POST"], "view_func": UserController.update_user, "validation": {
+            "fields": {
+                "login": {
+                    ValidationMiddleware.IS_REQUIRED: True,
+                    ValidationMiddleware.IS_NULLABLE: True,
+                },
+                "user_name": {
+                    ValidationMiddleware.IS_REQUIRED: True,
+                    ValidationMiddleware.IS_NULLABLE: True,
+                }
+            }
+        }
+    },
+
     {"rule": "/get_users", "methods": ["GET"], "view_func": UserController.get_users},
 ]
