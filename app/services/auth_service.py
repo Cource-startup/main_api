@@ -1,10 +1,10 @@
 from exceptions.authorization.user_not_registered import UserNotRegistered
 from exceptions.conflict_error import ConflictError
 from exceptions.not_found_error import NotFoundError
-from services.session_service import SessionService
 from exceptions import AuthorizationError, FatalError
 from services.google_auth_service import GoogleAuthService
 from services import UserService
+from flask import session
 
 class AuthService:
         
@@ -28,9 +28,9 @@ class AuthService:
     def auth_user(service_auth_id_field_name, service_auth_code):
         _, user = __class__.get_authentication_and_user_by_service(service_auth_id_field_name, service_auth_code)
         if user:
+            session['user_id'] = user.get("id")
             return {
                 "user": user,
-                "session_token": SessionService.set_session(user["id"])
             }
         else:
             raise UserNotRegistered()
@@ -48,11 +48,10 @@ class AuthService:
             service_auth_id_field_name, 
             {service_auth_id_field_name: auth_data[service_auth_id_field_name], "login": login}
         )
-        
         if user:
+            session['user_id'] = user.get("id")
             return {
                 "user": user,
-                "session_token": SessionService.set_session(user["id"])
             }
         else:
             raise UserNotRegistered()

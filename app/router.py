@@ -4,11 +4,19 @@ from controllers import AuthController
 
 # Router rules with validation
 router_rules = [
-    {"rule": "/", "methods": ["GET"], "view_func": lambda: "Hello worldddddd!"},
-        
+    {
+        "rule": "/", 
+        "methods": ["GET"], 
+        "view_func": lambda: "Hello worldddddd!",
+        "authorization_not_required": True,
+    },
     # Google Auth
     {
-        "rule": "/user_auth", "methods": ["POST"], "view_func": AuthController.auth_controller, "validation": {
+        "rule": "/user_auth", 
+        "methods": ["POST"], 
+        "view_func": AuthController.auth_controller,
+        "authorization_not_required": True,
+        "validation": {
             "fields": {
                 "service_auth_id_field_name": {
                     ValidationMiddleware.IS_REQUIRED: True,
@@ -23,7 +31,11 @@ router_rules = [
         }
     },
     {
-        "rule": "/register_user", "methods": ["POST"], "view_func": UserController.register_user, "validation": {
+        "rule": "/register_user", 
+        "methods": ["POST"], 
+        "view_func": UserController.register_user,
+        "authorization_not_required": True,
+        "validation": {
             "fields": {
                 "service_auth_id_field_name": {
                     ValidationMiddleware.IS_REQUIRED: True,
@@ -45,7 +57,11 @@ router_rules = [
 
     # User API
     {
-        "rule": "/update_user/<int:id>", "methods": ["POST"], "view_func": UserController.update_user, "validation": {
+        "rule": "/update_user/<int:id>", 
+        "methods": ["POST"], 
+        "view_func": UserController.update_user,
+        "authorization_not_required": False,
+        "validation": {
             "fields": {
                 "login": {
                     ValidationMiddleware.IS_REQUIRED: True,
@@ -56,8 +72,12 @@ router_rules = [
                     ValidationMiddleware.IS_NULLABLE: True,
                 }
             }
-        }
+        },
     },
 
-    {"rule": "/get_users", "methods": ["GET"], "view_func": UserController.get_users},
+    {
+        "rule": "/get_users", 
+        "methods": ["GET"], 
+        "view_func": UserController.get_users,
+    },
 ]

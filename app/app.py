@@ -1,25 +1,24 @@
 import os
 from datetime import timedelta
-from services.session_service import SessionService
 from flask import Flask, request
 from core.exception_handler import ExceptionHandler
 from core.middleware_manager import MiddlewareManager
 from middleware.csrf_middleware import CSRFMiddleware
 from middleware.validation_middleware import ValidationMiddleware
+from middleware.session_middleware import SessionMiddleware
+from flask_cors import CORS
 from router import router_rules
 from db import db, migrate
 from config import Config, current_config
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 app.config.from_object(current_config)
 
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)
-
-# Configure session via SessionService
-SessionService.configure_session(app)
 
 # Register the global exception handler
 @app.errorhandler(Exception)
@@ -36,6 +35,10 @@ middleware_manager.add_middleware(validation_middleware)
 # Add CSRFTokenCheck middleware
 csrf_token_check = CSRFMiddleware()
 middleware_manager.add_middleware(csrf_token_check)
+
+# Add SessionMiddleware
+session_middleware = SessionMiddleware(router_rules)
+middleware_manager.add_middleware(session_middleware)
 
 # Middleware wrapper to create routes
 def create_route(app, rule, methods, view_func, endpoint=None):

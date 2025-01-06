@@ -9,8 +9,12 @@ class Config:
     CLIENT_SECRET_FILE = "../client_secret.json"
     CSRF_BACKEND_TOKEN = os.getenv('CSRF_BACKEND_TOKEN')
     SESSION_LIFE_TIME = 10 # in minutes
+    SECRET_KEY = os.getenv('SESSION_SECRET_KEY')
     SESSION_TYPE = "filesystem"
     GOOGLE_SIGN_IN_ACCOUNT = 'google_sign_in_account'
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
 class DevelopmentConfig(Config):
     DEBUG = True

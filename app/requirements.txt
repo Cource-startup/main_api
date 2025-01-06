@@ -98,3 +98,4 @@ urllib3==2.2.3
 werkzeug==2.3.7
     # via flask
 psycopg2-binary==2.9.6
+flask-cors>=3.0.10

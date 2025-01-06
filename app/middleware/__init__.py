@@ -1,2 +1,3 @@
 from middleware.validation_middleware import ValidationMiddleware
 from middleware.csrf_middleware import CSRFMiddleware
+from middleware.session_middleware import SessionMiddleware
