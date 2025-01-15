@@ -1,4 +1,5 @@
 import traceback
+from models.main_model import MainModel
 from exceptions.main_exception import MainException
 from exceptions.system_error import ServerError
 from flask import jsonify, make_response
@@ -24,7 +25,13 @@ class MainController:
                     type=type(e).__name__,       # Type of exception (e.g., ZeroDivisionError)
                     message=str(e),              # Exception message
                     traceback=traceback.format_exc()  # Full traceback as a string
-                )  
+                ) 
+
+            # Filter fields for models or lists of models
+            if isinstance(raw_response, MainModel):
+                raw_response = raw_response.filter_fields(user=getattr(g, 'current_user', None))
+            elif isinstance(raw_response, list) and all(isinstance(item, MainModel) for item in raw_response):
+                raw_response = [item.filter_fields(user=getattr(g, 'current_user', None)) for item in raw_response] 
                  
             # Format the result into a standard response
             response_body = {

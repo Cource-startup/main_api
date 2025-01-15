@@ -1,8 +1,8 @@
 from exceptions.system_error import ServerError
 
-class FatalError(SystemError):
+class FileError(SystemError):
     def __init__(self):
         super().__init__(
-            message="An unexpected error occurred. Please try again later.", 
+            message="File error occurred", 
             http_code=500, 
         )

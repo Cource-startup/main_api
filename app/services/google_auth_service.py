@@ -4,7 +4,7 @@ import pathlib
 import requests
 from exceptions.system.fatal_error import FatalError
 import google.auth.transport.requests
-from config import Config, current_config
+from config import current_config
 from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from cachecontrol import CacheControl
@@ -18,7 +18,7 @@ class GoogleAuthService:
 
     os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = current_config.OAUTHLIB_INSECURE_TRANSPORT
     flow = Flow.from_client_secrets_file(
-        client_secrets_file=os.path.join(pathlib.Path(__file__).parent, Config.CLIENT_SECRET_FILE),
+        client_secrets_file=os.path.join(pathlib.Path(__file__).parent, current_config.CLIENT_SECRET_FILE),
         scopes=[USER_PROFILE, USER_EMAIL, OPENID],
         redirect_uri=os.getenv("REDIRECT_URI")
     )
@@ -33,7 +33,7 @@ class GoogleAuthService:
         id_info = id_token.verify_oauth2_token(
             GoogleAuthService.flow.credentials.id_token,
             google.auth.transport.requests.Request(session=CacheControl(requests.Session())),
-            Config.GOOGLE_CLIENT_ID
+            current_config.GOOGLE_CLIENT_ID
         )
         if not id_info:
             raise FatalError(message="Failure of request to GoogleAuthService", details={"auth_code": auth_code})

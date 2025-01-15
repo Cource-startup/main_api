@@ -70,9 +70,20 @@ router_rules = [
                 "user_name": {
                     ValidationMiddleware.IS_REQUIRED: True,
                     ValidationMiddleware.IS_NULLABLE: True,
-                }
+                },
+                "avatar": {
+                    ValidationMiddleware.IS_REQUIRED: False,
+                    ValidationMiddleware.IS_NULLABLE: True,
+                    ValidationMiddleware.REGEXP_PATTERN: r"^.*\.(jpg|jpeg|png|gif)$"  # Must be an image file
+                },
             }
         },
+    },
+
+    {
+        "rule": "/user/<int:user_id>/avatar", 
+        "methods": ["GET"], 
+        "view_func": UserController.get_user_avatar,
     },
 
     {

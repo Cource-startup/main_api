@@ -15,6 +15,9 @@ class UserController:
     
     def update_user(id):
         data = request.get_json()
-        return UserService.update_user_by_id(id, data)
-
+        avatar = request.files.get('avatar')  # Extract file if provided
+        return UserService.update_user_by_id(id, data, avatar)
+    
+    def get_user_avatar(user_id):
+        return UserService.get_user_avatar(user_id)
     

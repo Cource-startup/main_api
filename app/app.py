@@ -16,6 +16,9 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.config.from_object(current_config)
 
+# Ensure the upload folder exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)

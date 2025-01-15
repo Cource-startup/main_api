@@ -6,6 +6,7 @@ class Config:
     TRACK_STORAGE_FOLDER = "track_storage"
     MAX_CONTENT_LENGTH = 1024 * 1024 * 25 # 25 mb
     GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+    OAUTHLIB_INSECURE_TRANSPORT = "0"
     CLIENT_SECRET_FILE = "../client_secret.json"
     CSRF_BACKEND_TOKEN = os.getenv('CSRF_BACKEND_TOKEN')
     SESSION_LIFE_TIME = 10 # in minutes
@@ -15,6 +16,13 @@ class Config:
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
+
+    # Set upload folder and allowed extensions
+    UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER', './uploads')
+    MAX_CONTENT_LENGTH = int(os.getenv('MAX_CONTENT_LENGTH', 5 * 1024 * 1024))  # Max size: 5MB
+
+    # Allowed file extensions
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 class DevelopmentConfig(Config):
     DEBUG = True
