@@ -1,6 +1,7 @@
 import os
 import uuid
 from PIL import Image
+from exceptions.system.file_error import FileError
 
 class FileService:
     def __init__(self, upload_folder, allowed_extensions, max_file_size):
@@ -22,7 +23,7 @@ class FileService:
             file.save(file_path)
             return file_path
         except Exception as e:
-            raise FileException(f"Failed to save file: {str(e)}")
+            raise FileError(f"Failed to save file: {str(e)}")
 
     def validate_and_resize_image(self, file_path, output_size=(300, 300)):
         """
@@ -36,8 +37,8 @@ class FileService:
 
                 # Open and resize the image
                 img = Image.open(file_path)
-                img = img.resize(output_size, Image.ANTIALIAS)
+                img = img.resize(output_size, Image.LANCZOS)  # Use LANCZOS instead of ANTIALIAS
                 img.save(file_path)
         except Exception as e:
             os.remove(file_path)  # Delete the invalid file
-            raise FileException(f"Invalid image file: {str(e)}")
+            raise FileError(f"Invalid image file: {str(e)}")

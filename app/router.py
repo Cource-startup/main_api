@@ -87,6 +87,22 @@ router_rules = [
     },
 
     {
+        "rule": "/upload_avatar/<int:user_id>",
+        "methods": ["POST"],
+        "view_func": UserController.upload_avatar,
+        "authorization_not_required": False,
+        "validation": {
+            "fields": {
+                "avatar": {
+                    ValidationMiddleware.IS_REQUIRED: True,
+                    ValidationMiddleware.IS_NULLABLE: False,
+                    ValidationMiddleware.REGEXP_PATTERN: r"^.*\.(jpg|jpeg|png|gif)$"  # Must be an image file
+                },
+            }
+        },
+    },
+
+    {
         "rule": "/get_users", 
         "methods": ["GET"], 
         "view_func": UserController.get_users,

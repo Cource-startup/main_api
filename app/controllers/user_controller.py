@@ -21,3 +21,16 @@ class UserController:
     def get_user_avatar(user_id):
         return UserService.get_user_avatar(user_id)
     
+
+    def upload_avatar(user_id):
+        """
+        Handle the avatar upload request.
+
+        :param user_id: ID of the user to upload an avatar for.
+        :return: Updated user data with the new avatar.
+        """
+        avatar = request.files.get('avatar')  # Extract file from the request
+        # print(avatar)
+        
+        return UserService.upload_user_avatar(user_id, avatar)
+    

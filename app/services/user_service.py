@@ -10,13 +10,12 @@ from flask import send_file
 
 
 class UserService:
-    def __init__(self):
-        # Initialize FileService as a property of the class
-        self.file_service = FileService(
-            upload_folder=current_config.UPLOAD_FOLDER,
-            allowed_extensions=current_config.ALLOWED_EXTENSIONS,
-            max_file_size=current_config.MAX_CONTENT_LENGTH,
-        )
+    # Define file_service as a class-level attribute
+    file_service = FileService(
+        upload_folder=current_config.UPLOAD_FOLDER,
+        allowed_extensions=current_config.ALLOWED_EXTENSIONS,
+        max_file_size=current_config.MAX_CONTENT_LENGTH,
+    )
 
     def get_users_by(field = None, field_value = None, from_number = None, count = None):
 
@@ -109,4 +108,23 @@ class UserService:
         if not user:
             raise UserNotFound()
         return send_file(user.avatar_path, mimetype="image/jpeg")
-    
+
+    @staticmethod
+    def upload_user_avatar(user_id, avatar):
+        """
+        Upload a user's avatar.
+        """
+        user = User.query.get(user_id)
+        if not user:
+            raise UserNotFound()
+
+        if avatar:
+            try:
+                file_path = UserService.file_service.save_file(avatar)  # Use instance attribute
+                UserService.file_service.validate_and_resize_image(file_path)  # Validate and resize
+                user.avatar = file_path  # Update the avatar path for the user
+            except FileError as e:
+                raise e
+
+        db.session.commit()
+        return UserService.get_user_by_id(user_id)

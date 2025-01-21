@@ -16,3 +16,5 @@ client_secret.json
 *.log
 app/uploads/*
 !app/uploads/.gitkeep
+app/dev_file_storage/*
+!app/dev_file_storage/.gitkeep
